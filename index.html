@@ -2192,8 +2192,8 @@ html.gsap-active .reveal { transition: none; }
     </div>
     <div class="contact-layout">
       <div class="contact-info">
-        <h3>Elige cómo contactarnos</h3>
-        <p class="body-md">Respondemos en menos de 24 horas hábiles. Para proyectos urgentes, contáctanos por WhatsApp.</p>
+        <h3>Escríbenos por WhatsApp</h3>
+        <p class="body-md">Es la forma más rápida de contactarnos. Respondemos en menos de 24 horas hábiles.</p>
         <div class="contact-methods">
           <a class="contact-method" href="https://wa.me/524424606609" target="_blank">
             <div class="method-icon wa">
@@ -2224,7 +2224,7 @@ html.gsap-active .reveal { transition: none; }
       <!-- FORMULARIO — CTA Principal de la sección -->
       <div class="contact-form-wrap">
         <div class="form-title">Solicita tu cotización</div>
-        <div class="form-subtitle">Completa el formulario y un especialista te contactará en menos de 24 horas.</div>
+        <div class="form-subtitle">Completa los datos y se abrirá WhatsApp con tu solicitud lista para enviar.</div>
         <form id="contactForm" onsubmit="handleSubmit(event)">
           <div class="form-grid">
             <div class="form-group">
@@ -2236,12 +2236,8 @@ html.gsap-active .reveal { transition: none; }
               <input type="text" id="company" name="company" placeholder="Nombre de tu empresa" required>
             </div>
             <div class="form-group">
-              <label for="email">Correo electrónico *</label>
-              <input type="email" id="email" name="email" placeholder="tu@empresa.com" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Teléfono / WhatsApp</label>
-              <input type="tel" id="phone" name="phone" placeholder="+52 (461) 000 0000">
+              <label for="phone">WhatsApp *</label>
+              <input type="tel" id="phone" name="phone" placeholder="+52 442 000 0000" required>
             </div>
             <div class="form-group full">
               <label for="project_type">Tipo de proyecto *</label>
@@ -2262,7 +2258,7 @@ html.gsap-active .reveal { transition: none; }
             </div>
             <div class="form-group full">
               <button type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">
-                Enviar solicitud de cotización →
+                Enviar por WhatsApp →
               </button>
             </div>
           </div>
@@ -2598,19 +2594,42 @@ window.addEventListener('scroll', () => {
   }
 });
 
-/* — FORM SUBMIT — */
+/* — FORM SUBMIT → abre WhatsApp con la solicitud prellenada — */
+const WHATSAPP_NUMBER = '524424606609'; /* Tu número en formato internacional (52 + 10 dígitos) */
 function handleSubmit(e) {
   e.preventDefault();
+  const val = id => (document.getElementById(id).value || '').trim();
+  const name = val('name');
+  const company = val('company');
+  const phone = val('phone');
+  const typeSel = document.getElementById('project_type');
+  const type = typeSel.value ? typeSel.options[typeSel.selectedIndex].text : '';
+  const message = val('message');
+
+  const lines = [
+    'Hola KASAYAX, quiero solicitar una cotización.',
+    '',
+    'Nombre: ' + name,
+    'Empresa: ' + company,
+    'WhatsApp: ' + phone,
+    'Tipo de proyecto: ' + type,
+    '',
+    'Detalle del proyecto:',
+    message
+  ];
+
+  const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+  window.open(url, '_blank');
+
   const btn = e.target.querySelector('button[type="submit"]');
-  btn.textContent = 'Enviando...';
-  btn.disabled = true;
-  /* MARCADOR: Reemplaza este bloque con tu lógica de envío real (fetch a API, EmailJS, Formspree, etc.) */
+  btn.textContent = '✓ Abriendo WhatsApp...';
+  btn.style.background = 'var(--teal)';
+  btn.style.color = '#07091A';
   setTimeout(() => {
-    btn.textContent = '✓ Solicitud enviada — Te contactaremos pronto';
-    btn.style.background = 'var(--teal)';
-    btn.style.color = '#07091A';
-    e.target.reset();
-  }, 1200);
+    btn.textContent = 'Enviar por WhatsApp →';
+    btn.style.background = '';
+    btn.style.color = '';
+  }, 2500);
 }
 
 /* — SMOOTH SCROLL for anchor links — */
