@@ -725,6 +725,219 @@ nav {
   margin-top: 4px;
 }
 
+/* Media clickeable + hint de galería */
+.case-media.is-clickable { cursor: pointer; }
+
+.case-media-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(7,9,26,0.78);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border-em);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 100px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+.case-media.is-clickable:hover .case-media-hint,
+.case-media.is-clickable:focus-visible .case-media-hint { opacity: 1; transform: translateY(0); }
+
+.case-media.is-clickable img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.case-media.is-clickable:hover img { transform: scale(1.05); }
+
+/* ============================================================
+   LIGHTBOX / GALERÍA MODAL CARRUSEL
+   ============================================================ */
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(4,5,16,0.82);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.gallery-modal.open { display: flex; opacity: 1; }
+
+.gallery-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+}
+.gallery-modal.open .gallery-dialog { transform: scale(1); }
+
+.gallery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.gallery-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+.gallery-close {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.gallery-close:hover { color: var(--text); border-color: var(--border-em); background: var(--violet-dim); }
+
+.gallery-stage {
+  position: relative;
+  background: var(--bg);
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.gallery-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.gallery-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.gallery-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Placeholder cuando aún no hay imagen real */
+.gallery-slide .slide-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  color: var(--text-dim);
+  padding: 24px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--bg-card2) 0%, var(--bg) 100%);
+}
+.gallery-slide .slide-placeholder .ph-icon { font-size: 48px; }
+.gallery-slide .slide-placeholder .ph-text { font-size: 14px; font-weight: 600; color: var(--text-muted); }
+.gallery-slide .slide-placeholder .ph-sub { font-size: 12px; font-style: italic; }
+
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(7,9,26,0.7);
+  border: 1px solid var(--border-em);
+  color: var(--text);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 2;
+}
+.gallery-nav:hover { background: var(--violet); border-color: var(--violet); }
+.gallery-nav.prev { left: 16px; }
+.gallery-nav.next { right: 16px; }
+.gallery-nav[disabled] { opacity: 0.3; cursor: default; }
+
+.gallery-caption {
+  padding: 16px 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+  min-height: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.gallery-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 24px 20px;
+}
+.gallery-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+}
+.gallery-dot.active { background: var(--violet-light); transform: scale(1.3); }
+
+.gallery-counter {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(7,9,26,0.7);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  z-index: 2;
+}
+
+@media (max-width: 600px) {
+  .gallery-nav { width: 38px; height: 38px; font-size: 18px; }
+  .gallery-title { font-size: 16px; }
+}
+
 /* ============================================================
    BENEFITS
    ============================================================ */
@@ -1765,41 +1978,41 @@ html.gsap-active .reveal { transition: none; }
 
       <!-- CASO 1 — SIC (ya existe) -->
       <div class="case-card reveal">
-        <div class="case-media">
+        <div class="case-media is-clickable" data-project="sic" role="button" tabindex="0" aria-label="Ver galería del proyecto SIC">
           <!-- MARCADOR: Reemplaza este bloque con <img> o <video> del proyecto SIC -->
           <div class="case-media-placeholder">
             <div class="icon-lg">🖥️</div>
             <div style="font-size:13px; font-weight:600; color:var(--text-dim);">[ Captura de pantalla o demo ]</div>
             <div style="font-size:11px; color:var(--text-dim); margin-top:4px; font-style:italic;">Reemplazar con imagen/video real del sistema</div>
           </div>
-          <div class="case-media-badge">Web · Gestión pública</div>
+          <div class="case-media-badge">Web · Agua potable</div>
+          <div class="case-media-hint"><span>🔍</span> Ver galería</div>
         </div>
         <div class="case-body">
-          <div class="case-client"><!-- MARCADOR: Nombre del municipio/organismo -->[Municipios del Bajío]</div>
-          <h3>Sistema de Gestión de Agua (SIC)</h3>
-          <p class="body-md">Plataforma web integral para la administración de usuarios, cobros, lectura de medidores y reportes operativos para organismos operadores de agua en el Bajío.</p>
+          <div class="case-client">Organismos operadores de agua potable</div>
+          <h3>Sistema de Métricas para Organismos de Agua Potable</h3>
+          <p class="body-md">Plataforma web de métricas e indicadores para la operación de organismos de agua: seguimiento de órdenes de trabajo, materiales utilizados, ubicación en mapa de cada orden y tableros financieros con los pagos recibidos por tipo y por lugar.</p>
           <div class="case-detail">
             <div class="case-detail-item">
               <label>Problema</label>
-              <!-- MARCADOR: Describe el problema real del cliente -->
-              <span>Procesos manuales de cobro y registro en papel</span>
+              <span>Operación sin métricas claras: órdenes, materiales y pagos dispersos y sin visibilidad</span>
             </div>
             <div class="case-detail-item">
               <label>Solución</label>
-              <span>Plataforma web + módulo de campo móvil</span>
+              <span>Tableros de métricas con georreferencia de órdenes y control financiero</span>
             </div>
           </div>
           <div class="case-results">
-            <!-- MARCADOR: Agrega resultados medibles reales -->
-            <span class="result-pill">+1,000 usuarios gestionados</span>
-            <span class="result-pill">Múltiples municipios</span>
+            <span class="result-pill">Órdenes de trabajo en mapa</span>
+            <span class="result-pill">Control de materiales</span>
+            <span class="result-pill">Finanzas por tipo y lugar</span>
           </div>
         </div>
       </div>
 
       <!-- CASO 2 — POS Panadería -->
       <div class="case-card reveal">
-        <div class="case-media">
+        <div class="case-media is-clickable" data-project="pos" role="button" tabindex="0" aria-label="Ver galería del proyecto POS Panadería">
           <!-- MARCADOR: Reemplaza este bloque con captura del POS -->
           <div class="case-media-placeholder">
             <div class="icon-lg">🏪</div>
@@ -1807,32 +2020,33 @@ html.gsap-active .reveal { transition: none; }
             <div style="font-size:11px; color:var(--text-dim); margin-top:4px; font-style:italic;">Reemplazar con imagen/video real del sistema</div>
           </div>
           <div class="case-media-badge">Desktop · Comercio</div>
+          <div class="case-media-hint"><span>🔍</span> Ver galería</div>
         </div>
         <div class="case-body">
-          <div class="case-client"><!-- MARCADOR: Nombre del cliente -->[Panadería / Negocio local]</div>
-          <h3>Sistema POS para Panadería</h3>
-          <p class="body-md">Punto de venta personalizado con control de inventario, gestión de turnos, cortes de caja y reportes de ventas diarias adaptado al flujo de trabajo de una panadería.</p>
+          <div class="case-client">Pastelería · 2 sucursales activas</div>
+          <h3>Sistema POS a la medida para Pastelerías</h3>
+          <p class="body-md">Punto de venta hecho a la medida para pastelerías, actualmente en uso en dos sucursales. Incluye venta, control de stock, reportes, envío de ticket por WhatsApp y muchas funciones extra que un POS tradicional no ofrece.</p>
           <div class="case-detail">
             <div class="case-detail-item">
               <label>Problema</label>
-              <span>Ventas registradas a mano, sin control de caja</span>
+              <span>Ventas y stock sin control, sin reportes ni tickets digitales</span>
             </div>
             <div class="case-detail-item">
               <label>Solución</label>
-              <span>POS a medida con inventario integrado</span>
+              <span>POS a medida con stock, reportes y ticket por WhatsApp</span>
             </div>
           </div>
           <div class="case-results">
-            <!-- MARCADOR: Resultados reales -->
-            <span class="result-pill">Control total de caja</span>
-            <span class="result-pill">Reportes automáticos</span>
+            <span class="result-pill">En uso en 2 sucursales</span>
+            <span class="result-pill">Ticket por WhatsApp</span>
+            <span class="result-pill">Control de stock y reportes</span>
           </div>
         </div>
       </div>
 
       <!-- CASO 3 — Clínica medicina estética -->
       <div class="case-card reveal">
-        <div class="case-media">
+        <div class="case-media is-clickable" data-project="clinica" role="button" tabindex="0" aria-label="Ver galería del proyecto Clínica">
           <!-- MARCADOR: Reemplaza con captura del sistema de la clínica -->
           <div class="case-media-placeholder">
             <div class="icon-lg">🏥</div>
@@ -1840,32 +2054,33 @@ html.gsap-active .reveal { transition: none; }
             <div style="font-size:11px; color:var(--text-dim); margin-top:4px; font-style:italic;">Reemplazar con imagen/video real del sistema</div>
           </div>
           <div class="case-media-badge">Web · Salud</div>
+          <div class="case-media-hint"><span>🔍</span> Ver galería</div>
         </div>
         <div class="case-body">
-          <div class="case-client"><!-- MARCADOR: Nombre de la clínica -->[Clínica de Medicina Estética]</div>
-          <h3>Sistema de Inventario para Clínica</h3>
-          <p class="body-md">Plataforma de gestión de inventario de insumos médicos, control de entradas y salidas, alertas de stock mínimo y trazabilidad de uso por procedimiento.</p>
+          <div class="case-client">Consultorio de Medicina Estética</div>
+          <h3>Sistema Integral para Clínica de Medicina Estética</h3>
+          <p class="body-md">Sistema a la medida que integra inventario con registro de lotes, punto de venta y agenda de tratamientos. Al cobrar un tratamiento se registran anticipos o pagos y se agregan productos; todo lo usado y vendido se descuenta automáticamente del inventario, con alertas de stock bajo y de caducidad próxima.</p>
           <div class="case-detail">
             <div class="case-detail-item">
               <label>Problema</label>
-              <span>Inventario en Excel sin trazabilidad de uso</span>
+              <span>Inventario, citas y cobros por separado, sin control de lotes ni caducidades</span>
             </div>
             <div class="case-detail-item">
               <label>Solución</label>
-              <span>Sistema web con alertas y reportes</span>
+              <span>Plataforma única: agenda, POS e inventario con descuento automático</span>
             </div>
           </div>
           <div class="case-results">
-            <!-- MARCADOR: Resultados reales -->
-            <span class="result-pill">Trazabilidad completa</span>
-            <span class="result-pill">Alertas automáticas</span>
+            <span class="result-pill">Agenda + POS + inventario</span>
+            <span class="result-pill">Descuento automático de stock</span>
+            <span class="result-pill">Alertas de stock y caducidad</span>
           </div>
         </div>
       </div>
 
       <!-- CASO 4 — TraceAIQuality -->
       <div class="case-card reveal">
-        <div class="case-media">
+        <div class="case-media is-clickable" data-project="trace" role="button" tabindex="0" aria-label="Ver galería del proyecto TraceAIQuality">
           <!-- MARCADOR: Reemplaza con captura/demo del sistema TraceAIQuality -->
           <div class="case-media-placeholder">
             <div class="icon-lg">🤖</div>
@@ -1873,6 +2088,7 @@ html.gsap-active .reveal { transition: none; }
             <div style="font-size:11px; color:var(--text-dim); margin-top:4px; font-style:italic;">Reemplazar con imagen/video real del sistema</div>
           </div>
           <div class="case-media-badge" style="background:var(--teal); color:#07091A;">IA · Manufactura automotriz</div>
+          <div class="case-media-hint"><span>🔍</span> Ver galería</div>
         </div>
         <div class="case-body">
           <div class="case-client" style="color:var(--violet-light);">Ensambladora alemana de motores · Silao, Guanajuato</div>
@@ -1897,7 +2113,7 @@ html.gsap-active .reveal { transition: none; }
         </div>
       </div>
 
-      <!-- CASO 5 — Placeholder para proyecto futuro -->
+      <!-- CASO 5 — Placeholder para proyecto futuro (NO abre galería) -->
       <div class="case-card reveal" style="border-style:dashed; border-color:var(--border-em); opacity:0.7;">
         <div class="case-media" style="border:none;">
           <div class="case-media-placeholder">
@@ -2406,6 +2622,26 @@ html.gsap-active .reveal { transition: none; }
 </footer>
 
 <!-- ============================================================
+     MODAL / LIGHTBOX CARRUSEL DE GALERÍA DE PROYECTOS
+     ============================================================ -->
+<div class="gallery-modal" id="galleryModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
+  <div class="gallery-dialog">
+    <div class="gallery-header">
+      <span class="gallery-title" id="galleryTitle">Galería del proyecto</span>
+      <button class="gallery-close" type="button" aria-label="Cerrar galería">&times;</button>
+    </div>
+    <div class="gallery-stage">
+      <span class="gallery-counter">1 / 1</span>
+      <div class="gallery-track"></div>
+      <button class="gallery-nav prev" type="button" aria-label="Imagen anterior">&#8249;</button>
+      <button class="gallery-nav next" type="button" aria-label="Imagen siguiente">&#8250;</button>
+    </div>
+    <div class="gallery-caption"></div>
+    <div class="gallery-dots"></div>
+  </div>
+</div>
+
+<!-- ============================================================
      SCRIPTS
      ============================================================ -->
 <script>
@@ -2698,6 +2934,252 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+/* ============================================================
+   GALERÍA / LIGHTBOX CARRUSEL DE PROYECTOS
+   ============================================================ */
+/*
+  CÓMO AGREGAR TUS FOTOS (compatible con GitHub Pages):
+
+  1) Crea una carpeta por proyecto junto a index.html, con el nombre indicado
+     en "folder" más abajo. Ejemplo de estructura:
+
+        index.html
+        sistema-agua/      ← fotos del Sistema de Métricas de Agua
+        pos-pasteleria/    ← fotos del POS de pastelerías
+        clinica/           ← fotos de la Clínica
+        traceaiquality/    ← fotos de TraceAIQuality
+
+  2) Nombra las imágenes de forma consecutiva empezando en 1:
+        1.jpg, 2.jpg, 3.jpg, ...
+     Se aceptan extensiones .jpg, .jpeg, .png y .webp (puedes mezclarlas).
+     El sistema carga automáticamente todas las que existan, EN ORDEN, y se
+     detiene en el primer número que falte. No tienes que tocar el código:
+     solo agrega más archivos numerados a la carpeta.
+
+  3) (Opcional) Para poner un texto debajo de cada foto, agrega un arreglo
+     "captions" con la descripción de la 1ª, 2ª, 3ª imagen, etc.
+*/
+const PROJECT_GALLERIES = {
+  sic: {
+    title: 'Sistema de Métricas para Organismos de Agua Potable',
+    folder: 'sistema-agua',
+    captions: [] // ej: ['Tablero de métricas', 'Órdenes en mapa']
+  },
+  pos: {
+    title: 'Sistema POS a la medida para Pastelerías',
+    folder: 'pos-pasteleria',
+    captions: []
+  },
+  clinica: {
+    title: 'Sistema Integral para Clínica de Medicina Estética',
+    folder: 'clinica',
+    captions: []
+  },
+  trace: {
+    title: 'TraceAIQuality',
+    folder: 'traceaiquality',
+    captions: []
+  }
+};
+
+/* Extensiones que se intentan para cada número de imagen */
+const GALLERY_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG', 'WEBP'];
+const GALLERY_MAX = 100; /* tope de seguridad de imágenes por proyecto */
+
+/* Intenta cargar una imagen; resuelve a true/false sin lanzar error */
+function imgExists(src) {
+  return new Promise(resolve => {
+    const im = new Image();
+    im.onload = () => resolve(true);
+    im.onerror = () => resolve(false);
+    im.src = src;
+  });
+}
+
+/* Carga consecutivamente folder/1, folder/2, ... probando cada extensión.
+   Se detiene en el primer índice que no exista en ninguna extensión. */
+async function loadFolderImages(folder, captions) {
+  const found = [];
+  for (let i = 1; i <= GALLERY_MAX; i++) {
+    let hit = null;
+    for (const ext of GALLERY_EXTS) {
+      const src = folder + '/' + i + '.' + ext;
+      if (await imgExists(src)) { hit = src; break; }
+    }
+    if (!hit) break;
+    found.push({ src: hit, caption: (captions && captions[i - 1]) || '' });
+  }
+  return found;
+}
+
+(function initGallery() {
+  const modal = document.getElementById('galleryModal');
+  if (!modal) return;
+
+  const track    = modal.querySelector('.gallery-track');
+  const titleEl  = modal.querySelector('.gallery-title');
+  const captionEl= modal.querySelector('.gallery-caption');
+  const dotsEl   = modal.querySelector('.gallery-dots');
+  const counterEl= modal.querySelector('.gallery-counter');
+  const prevBtn  = modal.querySelector('.gallery-nav.prev');
+  const nextBtn  = modal.querySelector('.gallery-nav.next');
+  const closeBtn = modal.querySelector('.gallery-close');
+
+  let slides = [];
+  let index = 0;
+  let lastFocused = null;
+  const cache = {}; // guarda las imágenes ya detectadas por proyecto
+
+  function showLoading() {
+    track.innerHTML =
+      '<div class="gallery-slide"><div class="slide-placeholder">' +
+        '<div class="ph-icon">⏳</div>' +
+        '<div class="ph-text">Cargando imágenes…</div>' +
+      '</div></div>';
+    dotsEl.innerHTML = '';
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    dotsEl.style.display = 'none';
+    counterEl.style.display = 'none';
+    captionEl.textContent = '';
+  }
+
+  function buildSlides(images) {
+    // Si no hay imágenes, mostramos un placeholder ilustrativo.
+    if (!images || !images.length) {
+      images = [{ src: '', caption: 'Aún no hay imágenes para este proyecto.', placeholder: true }];
+    }
+
+    track.innerHTML = '';
+    dotsEl.innerHTML = '';
+    slides = images;
+
+    images.forEach((img, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'gallery-slide';
+      if (img.placeholder || !img.src) {
+        slide.innerHTML =
+          '<div class="slide-placeholder">' +
+            '<div class="ph-icon">🖼️</div>' +
+            '<div class="ph-text">' + (img.caption || 'Imagen pendiente') + '</div>' +
+            '<div class="ph-sub">Agrega imágenes (1.jpg, 2.jpg, …) en la carpeta del proyecto</div>' +
+          '</div>';
+      } else {
+        const el = document.createElement('img');
+        el.src = img.src;
+        el.alt = img.caption || titleEl.textContent;
+        el.loading = 'lazy';
+        // Si la imagen falla al cargar, mostrar placeholder elegante.
+        el.onerror = function() {
+          slide.innerHTML =
+            '<div class="slide-placeholder">' +
+              '<div class="ph-icon">⚠️</div>' +
+              '<div class="ph-text">No se pudo cargar la imagen</div>' +
+              '<div class="ph-sub">' + img.src + '</div>' +
+            '</div>';
+        };
+        slide.appendChild(el);
+      }
+      track.appendChild(slide);
+
+      const dot = document.createElement('button');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Ir a la imagen ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(dot);
+    });
+
+    const single = slides.length <= 1;
+    prevBtn.style.display = single ? 'none' : '';
+    nextBtn.style.display = single ? 'none' : '';
+    dotsEl.style.display = single ? 'none' : '';
+    counterEl.style.display = single ? 'none' : '';
+  }
+
+  function render() {
+    track.style.transform = 'translateX(' + (-index * 100) + '%)';
+    captionEl.textContent = slides[index] ? (slides[index].caption || '') : '';
+    counterEl.textContent = (index + 1) + ' / ' + slides.length;
+    dotsEl.querySelectorAll('.gallery-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === index));
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === slides.length - 1;
+  }
+
+  function goTo(i) {
+    index = Math.max(0, Math.min(i, slides.length - 1));
+    render();
+  }
+
+  async function open(project) {
+    lastFocused = document.activeElement;
+    const data = PROJECT_GALLERIES[project];
+    titleEl.textContent = data ? data.title : 'Galería del proyecto';
+
+    // Abrir de inmediato mostrando estado de carga
+    showLoading();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+
+    // Obtener imágenes (desde caché o detectándolas en la carpeta)
+    let images;
+    if (cache[project]) {
+      images = cache[project];
+    } else if (data && data.folder) {
+      images = await loadFolderImages(data.folder, data.captions);
+      cache[project] = images;
+    } else {
+      images = [];
+    }
+
+    // Si el usuario ya cerró el modal mientras cargaba, no hacer nada más
+    if (!modal.classList.contains('open')) return;
+
+    buildSlides(images);
+    index = 0;
+    render();
+  }
+
+  function close() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  // Disparadores: cada .case-media clickeable
+  document.querySelectorAll('.case-media.is-clickable').forEach(el => {
+    el.addEventListener('click', () => open(el.dataset.project));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el.dataset.project); }
+    });
+  });
+
+  prevBtn.addEventListener('click', () => goTo(index - 1));
+  nextBtn.addEventListener('click', () => goTo(index + 1));
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') goTo(index - 1);
+    else if (e.key === 'ArrowRight') goTo(index + 1);
+  });
+
+  // Swipe en táctiles
+  let startX = null;
+  track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) goTo(index + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
+})();
 </script>
 </body>
 </html>
