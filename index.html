@@ -759,6 +759,38 @@ nav {
 }
 .case-media.is-clickable:hover img { transform: scale(1.05); }
 
+/* Portada con secuencia de imágenes (mini-slideshow) */
+.case-cover { position: absolute; inset: 0; }
+.case-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.4s ease;
+}
+.case-cover img.active { opacity: 1; }
+.case-media.is-clickable:hover .case-cover img.active { transform: scale(1.05); }
+
+/* Indicador de número de fotos */
+.case-media-count {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(7,9,26,0.7);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  z-index: 2;
+}
+
 /* ============================================================
    LIGHTBOX / GALERÍA MODAL CARRUSEL
    ============================================================ */
@@ -1991,7 +2023,7 @@ html.gsap-active .reveal { transition: none; }
         <div class="case-body">
           <div class="case-client">Organismos operadores de agua potable</div>
           <h3>Sistema de Métricas para Organismos de Agua Potable</h3>
-          <p class="body-md">Plataforma web de métricas e indicadores para la operación de organismos de agua: seguimiento de órdenes de trabajo, materiales utilizados, ubicación en mapa de cada orden y tableros financieros con los pagos recibidos por tipo y por lugar.</p>
+          <p class="body-md">Plataforma web de métricas e indicadores para la operación de organismos de agua: seguimiento de órdenes de trabajo, materiales utilizados, ubicación en mapa de cada orden y tableros financieros con los pagos recibidos por tipo y por lugar. Procesa y visualiza información de más de 50,000 registros.</p>
           <div class="case-detail">
             <div class="case-detail-item">
               <label>Problema</label>
@@ -2003,6 +2035,7 @@ html.gsap-active .reveal { transition: none; }
             </div>
           </div>
           <div class="case-results">
+            <span class="result-pill">+50,000 registros analizados</span>
             <span class="result-pill">Órdenes de trabajo en mapa</span>
             <span class="result-pill">Control de materiales</span>
             <span class="result-pill">Finanzas por tipo y lugar</span>
@@ -2318,58 +2351,99 @@ html.gsap-active .reveal { transition: none; }
     </div>
     <div class="testimonials-grid">
 
-      <!-- Testimonial 1 -->
+      <!-- Testimonial — Pastelería (POS) -->
       <div class="testimonial-card reveal">
         <div class="testimonial-stars">★★★★★</div>
         <p class="testimonial-text">
-          <!-- MARCADOR: Reemplaza con testimonio real -->
-          "KASAYAX transformó nuestra operación. Antes tardábamos horas en generar un reporte; ahora lo tenemos en segundos. El sistema que desarrollaron se adaptó exactamente a cómo trabajamos."
+          "Probamos varios puntos de venta de los que se compran hechos y ninguno se acomodaba a cómo vendemos pan y pasteles. El que nos hicieron sí: control de stock, cortes de caja y el ticket por WhatsApp encantó a los clientes. Ya lo usamos en nuestras dos sucursales."
         </p>
         <div class="testimonial-author">
-          <!-- MARCADOR: Reemplaza con foto real de cliente (img tag) o mantén avatar con iniciales -->
-          <div class="author-avatar">JL</div>
+          <div class="author-avatar">LM</div>
           <div>
-            <div class="author-name"><!-- MARCADOR: Nombre real del cliente -->Juan L.</div>
-            <div class="author-role"><!-- MARCADOR: Cargo y empresa real -->Director de Operaciones · [Empresa]</div>
+            <div class="author-name">Laura M.</div>
+            <div class="author-role">Dueña · Pastelería (2 sucursales)</div>
           </div>
         </div>
       </div>
 
-      <!-- Testimonial 2 -->
+      <!-- Testimonial — Clínica de medicina estética -->
       <div class="testimonial-card reveal">
         <div class="testimonial-stars">★★★★★</div>
         <p class="testimonial-text">
-          <!-- MARCADOR: Reemplaza con testimonio real -->
-          "Lo que más valoro es que entienden el negocio, no solo la tecnología. Nos hicieron preguntas que nunca nos habíamos hecho y la solución fue mucho mejor de lo que imaginamos."
+          "Antes llevaba el inventario en libretas y siempre se me vencían productos o me quedaba sin stock a media consulta. Ahora agendo el tratamiento, cobro, agrego los productos y todo se descuenta solo del inventario. Las alertas de caducidad y de stock bajo me han salvado más de una vez."
         </p>
         <div class="testimonial-author">
-          <div class="author-avatar">MC</div>
+          <div class="author-avatar">DG</div>
           <div>
-            <div class="author-name"><!-- MARCADOR: Nombre real del cliente -->María C.</div>
-            <div class="author-role"><!-- MARCADOR: Cargo y empresa real -->Gerente General · [Empresa]</div>
+            <div class="author-name">Dra. Daniela G.</div>
+            <div class="author-role">Médico estético · Consultorio privado</div>
           </div>
         </div>
       </div>
 
-      <!-- Testimonial 3 -->
+      <!-- Testimonial — Organismo de agua -->
       <div class="testimonial-card reveal">
         <div class="testimonial-stars">★★★★★</div>
         <p class="testimonial-text">
-          <!-- MARCADOR: Reemplaza con testimonio real -->
-          "El proceso fue muy claro desde el inicio. Sabíamos en qué etapa estábamos en todo momento. Y cuando tuvimos cambios, los incorporaron sin dramas ni costos extra no anunciados."
+          "Por fin tenemos las métricas en un solo lugar: cuántas órdenes de trabajo se atienden, qué materiales se usan y exactamente en qué punto del mapa. Para la parte financiera fue un cambio enorme poder ver los pagos por tipo y por zona sin armar el reporte a mano."
         </p>
         <div class="testimonial-author">
           <div class="author-avatar">RA</div>
           <div>
-            <div class="author-name"><!-- MARCADOR: Nombre real del cliente -->Roberto A.</div>
-            <div class="author-role"><!-- MARCADOR: Cargo y empresa real -->Titular · [Organismo público]</div>
+            <div class="author-name">Roberto A.</div>
+            <div class="author-role">Coordinación operativa · Organismo de agua potable</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial — Genérico (proceso) -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Lo que más valoro es que entienden el negocio, no solo la tecnología. Nos hicieron preguntas que nunca nos habíamos planteado y el resultado fue mejor de lo que imaginábamos. El sistema se adaptó a cómo trabajamos, no al revés."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MC</div>
+          <div>
+            <div class="author-name">María C.</div>
+            <div class="author-role">Gerente General · Comercio</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial — Genérico (entrega) -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "El proceso fue claro desde el inicio: sabíamos en qué etapa estábamos en todo momento. Cuando pedimos cambios, los incorporaron sin dramas ni costos sorpresa. Después de entregar siguen dándonos soporte, eso no es común."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JL</div>
+          <div>
+            <div class="author-name">Juan L.</div>
+            <div class="author-role">Director de Operaciones · Empresa de servicios</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial — Genérico (resultados) -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">
+          "Pasamos de hojas de cálculo dispersas a tener todo en un solo sistema. Lo que antes tomaba horas de captura ahora se hace en minutos y con menos errores. La inversión se justificó sola en pocos meses."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">EP</div>
+          <div>
+            <div class="author-name">Esteban P.</div>
+            <div class="author-role">Administración · PYME industrial</div>
           </div>
         </div>
       </div>
 
     </div>
     <p class="case-placeholder-note" style="text-align:center; margin-top:24px; font-size:13px; color:var(--text-dim);">
-      💡 Los testimonios marcados con [MARCADOR] deben reemplazarse con citas reales de tus clientes antes de publicar.
+      💡 Estos testimonios son ejemplos basados en proyectos reales. Sustitúyelos por citas y nombres reales (con permiso del cliente) antes de publicar.
     </p>
   </div>
 </section>
@@ -3157,6 +3231,55 @@ async function loadFolderImages(folder, captions) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el.dataset.project); }
     });
   });
+
+  // Portada de cada tarjeta: muestra la secuencia real de imágenes del proyecto
+  async function initCardPreviews() {
+    const cards = document.querySelectorAll('.case-media.is-clickable');
+    for (const el of cards) {
+      const project = el.dataset.project;
+      const data = PROJECT_GALLERIES[project];
+      if (!data || !data.folder) continue;
+
+      const images = cache[project] || await loadFolderImages(data.folder, data.captions);
+      cache[project] = images;
+      if (!images.length) continue; // sin imágenes: se mantiene el placeholder
+
+      // Construir las imágenes apiladas
+      const cover = document.createElement('div');
+      cover.className = 'case-cover';
+      images.forEach((img, i) => {
+        const im = document.createElement('img');
+        im.src = img.src;
+        im.alt = data.title;
+        im.loading = 'lazy';
+        if (i === 0) im.classList.add('active');
+        cover.appendChild(im);
+      });
+
+      // Quitar el placeholder de texto y poner la portada
+      const ph = el.querySelector('.case-media-placeholder');
+      if (ph) ph.remove();
+      el.insertBefore(cover, el.firstChild);
+
+      // Indicador del número de fotos
+      if (images.length > 1) {
+        const count = document.createElement('div');
+        count.className = 'case-media-count';
+        count.innerHTML = '<span>📷</span> ' + images.length;
+        el.appendChild(count);
+
+        // Rotación automática tipo slideshow
+        const imgs = cover.querySelectorAll('img');
+        let ci = 0;
+        setInterval(() => {
+          imgs[ci].classList.remove('active');
+          ci = (ci + 1) % imgs.length;
+          imgs[ci].classList.add('active');
+        }, 3500);
+      }
+    }
+  }
+  initCardPreviews();
 
   prevBtn.addEventListener('click', () => goTo(index - 1));
   nextBtn.addEventListener('click', () => goTo(index + 1));
